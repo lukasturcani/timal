@@ -32,10 +32,6 @@ pub fn Dropzone() -> Element {
                         }
                         " or drag and drop"
                     }
-                    p {
-                        class: "text-xs text-gray-500 dark:text-gray-400",
-                        "SVG, PNG, JPG or GIF (MAX. 800x400px)"
-                    }
                 }
                 input {
                     id: "dropzone-file",
