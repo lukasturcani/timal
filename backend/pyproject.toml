@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "setuptools_scm"]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,10 +7,9 @@ name = "millie"
 maintainers = [
   { name = "Lukas Turcani", email = "lukasturcani93@gmail.com" },
 ]
-
+version = "0.1.0"
 dependencies = []
 requires-python = ">=3.12"
-dynamic = ["version"]
 readme = "README.rst"
 description = "Does things for you."
 
@@ -28,8 +27,6 @@ dev = [
 [project.urls]
 github = "https://github.com/lukasturcani/millie"
 documentation = "https://millie.readthedocs.io"
-
-[tool.setuptools_scm]
 
 [tool.ruff]
 line-length = 79
