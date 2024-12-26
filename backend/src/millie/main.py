@@ -1,17 +1,30 @@
 """The backend."""
 
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket
+from pydantic import BaseModel
 
 app = FastAPI()
 
 
-@app.get("/")
-def read_root() -> str:
-    """Default root."""
-    return "Hello, world!"
+class AddFile(BaseModel):
+    """Add a file."""
+
+    name: str
+    path: str
+    xs: list[float]
+    ys: list[float]
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: str | None = None) -> str:
-    """Read an item."""
-    return f"Item {item_id} {q}"
+class Message(BaseModel):
+    """A websocket message."""
+
+    command: AddFile
+
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket) -> None:
+    """WebSocket endpoint."""
+    await websocket.accept()
+    while True:
+        raw_data = await websocket.receive_bytes()
+        print(raw_data)

@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 
 #[component]
-pub fn Dropzone() -> Element {
+pub fn Dropzone(onchange: EventHandler<FormEvent>) -> Element {
     rsx! {
         div {
             class: "flex items-center justify-center w-full",
@@ -34,6 +34,7 @@ pub fn Dropzone() -> Element {
                     }
                 }
                 input {
+                    onchange,
                     id: "dropzone-file",
                     r#type: "file",
                     class: "hidden"

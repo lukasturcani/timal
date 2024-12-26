@@ -4,6 +4,7 @@ use components::Navbar;
 use views::{Analysis, Blog, Home};
 
 mod components;
+mod state;
 mod views;
 
 #[derive(Debug, Clone, Routable, PartialEq)]
