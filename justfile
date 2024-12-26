@@ -18,7 +18,7 @@ watch-dioxus:
 
 # watch the backend
 watch-backend:
-  cd backend && uv run fastapi dev src/timal/main.py
+  cd backend && uv run fastapi dev src/millie/main.py
 
 # build docs
 docs:
