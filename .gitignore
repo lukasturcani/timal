@@ -8,3 +8,7 @@
 
 # Javascript dependencies
 node_modules/
+
+# Auto-generated assets
+assets/tailwind.css
+assets/flowbite.min.js
