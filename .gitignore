@@ -12,3 +12,11 @@ node_modules
 # Auto-generated assets
 frontend/assets/tailwind.css
 frontend/assets/flowbite.min.js
+
+__pycache__
+*.egg-info
+backend/.coverage
+backend/dist
+backend/build
+backend/docs/build
+backend/docs/source/_autosummary
