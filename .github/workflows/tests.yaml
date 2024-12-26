@@ -17,8 +17,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version-file: "pyproject.toml"
-      - run: uv sync --all-extras --dev
-      - run: uv run ruff check src/ tests/ docs/source/ examples/
+      - run: cd backend && uv sync --all-extras --dev
+      - run: cd backend && uv run ruff check src/ tests/ docs/source/ examples/
   mypy:
     runs-on: ubuntu-22.04
     steps:
@@ -30,8 +30,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version-file: "pyproject.toml"
-      - run: uv sync --all-extras --dev
-      - run: uv run mypy src/ tests/ docs/source/ examples/
+      - run: cd backend && uv sync --all-extras --dev
+      - run: cd backend && uv run mypy src/ tests/ docs/source/ examples/
   ruff-format:
     runs-on: ubuntu-22.04
     steps:
@@ -43,8 +43,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version-file: "pyproject.toml"
-      - run: uv sync --all-extras --dev
-      - run: uv run ruff format --check src/ tests/ docs/source/ examples/
+      - run: cd backend && uv sync --all-extras --dev
+      - run: cd backend && uv run ruff format --check src/ tests/ docs/source/ examples/
   pytest:
     runs-on: ubuntu-22.04
     steps:
@@ -56,8 +56,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version-file: "pyproject.toml"
-      - run: uv sync --all-extras --dev
-      - run: uv run pytest
+      - run: cd backend && uv sync --all-extras --dev
+      - run: cd backend && uv run pytest
   doctest:
     runs-on: ubuntu-22.04
     steps:
@@ -69,5 +69,5 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version-file: "pyproject.toml"
-      - run: uv sync --all-extras --dev
-      - run: uv run make -C docs doctest
+      - run: cd backend && uv sync --all-extras --dev
+      - run: cd backend && uv run make -C docs doctest
