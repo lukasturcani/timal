@@ -16,7 +16,7 @@ jobs:
           cache-dependency-glob: "uv.lock"
       - uses: actions/setup-python@v5
         with:
-          python-version-file: "pyproject.toml"
+          python-version-file: "backend/pyproject.toml"
       - run: cd backend && uv sync --all-extras --dev
       - run: cd backend && uv run ruff check src/ tests/ docs/source/ examples/
   mypy:
@@ -29,7 +29,7 @@ jobs:
           cache-dependency-glob: "uv.lock"
       - uses: actions/setup-python@v5
         with:
-          python-version-file: "pyproject.toml"
+          python-version-file: "backend/pyproject.toml"
       - run: cd backend && uv sync --all-extras --dev
       - run: cd backend && uv run mypy src/ tests/ docs/source/ examples/
   ruff-format:
@@ -42,7 +42,7 @@ jobs:
           cache-dependency-glob: "uv.lock"
       - uses: actions/setup-python@v5
         with:
-          python-version-file: "pyproject.toml"
+          python-version-file: "backend/pyproject.toml"
       - run: cd backend && uv sync --all-extras --dev
       - run: cd backend && uv run ruff format --check src/ tests/ docs/source/ examples/
   pytest:
@@ -55,7 +55,7 @@ jobs:
           cache-dependency-glob: "uv.lock"
       - uses: actions/setup-python@v5
         with:
-          python-version-file: "pyproject.toml"
+          python-version-file: "backend/pyproject.toml"
       - run: cd backend && uv sync --all-extras --dev
       - run: cd backend && uv run pytest
   doctest:
@@ -68,6 +68,6 @@ jobs:
           cache-dependency-glob: "uv.lock"
       - uses: actions/setup-python@v5
         with:
-          python-version-file: "pyproject.toml"
+          python-version-file: "backend/pyproject.toml"
       - run: cd backend && uv sync --all-extras --dev
       - run: cd backend && uv run make -C docs doctest
