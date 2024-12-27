@@ -33,24 +33,28 @@ pub fn Analysis() -> Element {
         ))
     });
     rsx! {
-        Dropzone {
-            onchange: move |e: FormEvent| {
-                tracing::info!("File changed");
-                spawn(async move {
-                    if let Some(client) = &*client.read() {
-                        let msg = Message {
-                            command: Command::AddFile(AddFile {
-                                name: "test".to_string(),
-                                path: PathBuf::from("/Users/lukas/projects/timal/add-websockets/backend/src/millie/main.py"),
-                                xs: vec![1.0, 2.0, 3.0],
-                                ys: vec![1.0, 2.0, 3.0],
-                            }),
-                        };
-                        let json = serde_json::to_vec(&msg).unwrap();
-                        client.borrow_mut().send(json.into()).await.unwrap();
-                    }
-                });
+        main {
+            class: "container mx-auto min-h-screen flex items-center justify-center",
+            Dropzone {
+                onchange: move |e: FormEvent| {
+                    tracing::info!("File changed");
+                    spawn(async move {
+                        if let Some(client) = &*client.read() {
+                            let msg = Message {
+                                command: Command::AddFile(AddFile {
+                                    name: "test".to_string(),
+                                    path: PathBuf::from("/Users/lukas/projects/timal/add-websockets/backend/src/millie/main.py"),
+                                    xs: vec![1.0, 2.0, 3.0],
+                                    ys: vec![1.0, 2.0, 3.0],
+                                }),
+                            };
+                            let json = serde_json::to_vec(&msg).unwrap();
+                            client.borrow_mut().send(json.into()).await.unwrap();
+                        }
+                    });
+                }
             }
+
         }
     }
 }
