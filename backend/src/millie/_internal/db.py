@@ -1,6 +1,19 @@
 import sqlite3
+from collections.abc import Iterator
 
-from millie._internal.message import AddFile
+from millie._internal.models import AddFile, FileData
+
+
+def get_files(db: sqlite3.Connection) -> Iterator[FileData]:
+    return map(
+        FileData.model_validate,
+        (
+            {"name": name, "path": path}
+            for (name, path) in db.execute(
+                "SELECT name, path FROM files SORT BY name"
+            )
+        ),
+    )
 
 
 def add_file(db: sqlite3.Connection, command: AddFile) -> None:

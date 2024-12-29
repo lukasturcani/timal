@@ -15,9 +15,13 @@ struct AddFile {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+struct GetFiles;
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 enum Command {
     AddFile(AddFile),
+    GetFiles(GetFiles),
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
@@ -25,12 +29,29 @@ struct Message {
     command: Command,
 }
 
+#[derive(Copy, Clone, PartialEq, Eq)]
+enum State {
+    WaitingForWebSocket,
+    NoFiles,
+    HasFiles,
+}
+
 #[component]
 pub fn Analysis() -> Element {
+    let state = use_signal(|| State::WaitingForWebSocket);
     let client = use_resource(|| async {
-        Rc::new(RefCell::new(
-            connect("ws://localhost:8000/ws").await.unwrap(),
-        ))
+        let domain = document::eval("return document.domain;")
+            .await
+            .unwrap()
+            .to_string();
+        tracing::info!("domain is {domain}");
+        let mut ws = connect("ws://localhost:8000/ws").await.unwrap();
+        let msg = Message {
+            command: Command::GetFiles(GetFiles),
+        };
+        let json = serde_json::to_vec(&msg).unwrap();
+        ws.send(json.into()).await.unwrap();
+        Rc::new(RefCell::new(ws))
     });
     rsx! {
         main {
