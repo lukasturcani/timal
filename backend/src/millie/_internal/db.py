@@ -7,7 +7,7 @@ def create_tables(db: sqlite3.Connection) -> None:
         CREATE TABLE IF NOT EXISTS files
             ( id INTEGER PRIMARY KEY
             , name TEXT NOT NULL
-            . path TEXT NOT NULL
+            , path TEXT NOT NULL
             )
         """
     )
