@@ -4,9 +4,9 @@ import logging
 import sqlite3
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from typing import Annotated, assert_never
+from typing import Annotated
 
-from fastapi import Body, FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import Body, FastAPI
 from platformdirs import user_data_path
 from rich.logging import RichHandler
 
