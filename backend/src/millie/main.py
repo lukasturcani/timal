@@ -4,15 +4,13 @@ import logging
 import sqlite3
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from pathlib import Path
-from typing import Literal
 
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from platformdirs import user_data_path
-from pydantic import BaseModel
 from rich.logging import RichHandler
 
 from millie._internal.db import create_tables
+from millie._internal.message import Message
 
 DB_PATH = user_data_path("timal", "lukasturcani") / "data.db"
 DB_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -36,22 +34,6 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:  # noqa: ARG001
 app = FastAPI(lifespan=lifespan)
 
 logger = logging.getLogger(__name__)
-
-
-class AddFile(BaseModel):
-    """Add a file."""
-
-    type: Literal["AddFile"]
-    name: str
-    path: Path
-    xs: list[float]
-    ys: list[float]
-
-
-class Message(BaseModel):
-    """A websocket message."""
-
-    command: AddFile
 
 
 @app.websocket("/ws")
