@@ -1,5 +1,24 @@
 import sqlite3
 
+from millie._internal.message import AddFile
+
+
+def add_file(db: sqlite3.Connection, command: AddFile) -> None:
+    cursor = db.execute(
+        """
+        INSERT INTO files (name, path) VALUES (?, ?)
+        """,
+        (command.name, command.path),
+    )
+    file_id = cursor.lastrowid
+    db.executemany(
+        """
+        INSERT INTO data (file_id, x, y) VALUES (?, ?, ?)
+        """,
+        ((file_id, x, y) for x, y in zip(command.xs, command.ys, strict=True)),
+    )
+    db.commit()
+
 
 def create_tables(db: sqlite3.Connection) -> None:
     db.execute(
