@@ -14,11 +14,11 @@ enum State {
 pub fn Analysis() -> Element {
     let state = use_signal(|| State::WaitingForWebSocket);
     let files = use_resource(|| async {
-        let domain = document::eval("return document.domain;")
+        let domain = document::eval("dioxus.send(document.localaddr);")
+            .recv::<String>()
             .await
-            .unwrap()
-            .to_string();
-        tracing::info!("domain is {domain}");
+            .unwrap();
+        tracing::info!("domain is {domain:#?}");
         files()
     });
     rsx! {
